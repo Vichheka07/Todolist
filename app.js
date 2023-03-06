@@ -2,7 +2,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 
 const app = express();
-var items= [];
+let items= [];
+let workItems = [];
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -17,20 +18,25 @@ app.get("/", function(req, res){
         month: "long",
         day: "numeric"
     };
-    var day=today.toLocaleDateString("en-US", options);
-    
-    
-    res.render("list", {kindOfDay: day, newListItem: items});
+
+    let day=today.toLocaleDateString("en-US", options);
+    res.render("list", {listTitle: day, newListItem: items});
     
 });
 app.post("/", function(req, res){
-    var item = req.body.newItem;
+    let item = req.body.newItem;
+    if(req.body.list === "Work"){
+        workItems.push(item);
+        res.redirect("/work");
+    }else{
+        items.push(item);
+        res.redirect("/");
+    }
+});
+app.get("/work", function(req, res){
+    res.render("list", {listTitle: "Work List", newListItem: workItems});
+});
 
-    items.push(item);
-
-    res.redirect("/");
-})
-
-app.listen(3000, function(){
+app.listen(8080, function(){
     console.log("Sever started on port 3000");
 });
