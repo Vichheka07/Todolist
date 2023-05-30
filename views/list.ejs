@@ -9,17 +9,20 @@
         <h1> <%= listTitle %> </h1>
     </div>
     <div class="box">
-        <%for (var i=0; i<newListItem.length; i++){%>
-            <div class="check">
-                <input type="checkbox">
-                <p><%= newListItem[i]%></p>
-            </div>
-        <%}%>
-        <form action="/" method="post">
+        <%newListItem.forEach(function(item){%>
+            <form action="/delete" method="post">
+                <div class="check">
+                    <input type="checkbox" name="checkbox" value="<%=item.id%>" onchange="this.form.submit()">
+                    <p><%= item.name%></p>
+                </div>
+                <input type="hidden" name="lisName" value="<%= listTitle %>">
+            </form>
+        <%})%>
+        <form action="/" method="post" class="item">
             <input type="text" name="newItem" placeholder="សូមបញ្ចូលកត់ចំណាំ">
-            <button type="submit" name="list" value="push">បញ្ចូល</button>
-            <button type="submit" name="list" value="delete">លុប</button>
-            <button type="submit" name="list" value="work">ការងារ</button>
+            <button type="submit" name="list" value="<%= listTitle %>">បញ្ចូល</button>
+            <button type="submit" name="list" value="Today">ថ្ងៃនេះ</button>
+            <button type="submit" name="list" value="Work">ការងារ</button>
         </form>
     </div>
     

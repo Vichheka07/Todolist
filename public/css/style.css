@@ -41,7 +41,8 @@ p {
     font-size: 20px;
     font-weight: 200;
 }
-form{
+form.item{
+    margin-left: 20px;
     text-align: center;
 }
 input[type="text"] {
